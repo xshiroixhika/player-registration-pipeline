@@ -1,0 +1,34 @@
+name: player_registrations
+version: "1.0.0"
+config-version: 2
+profile: player_registrations
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+vars:
+  lookback_days: 3            # reprocess recent bronze data to catch late arrivals
+  min_cell_size: 10           # small-cell suppression threshold for the dashboard
+  reconcile_days: 7           # how many complete days to reconcile against the source
+  reconcile_tolerance: 0.005  # allowed variance (0.5%) before the build fails
+  date_spine_start: "2024-01-01"
+
+models:
+  player_registrations:
+    staging:
+      +schema: silver
+    marts:
+      +schema: gold
+      +materialized: table
+
+seeds:
+  player_registrations:
+    +schema: silver
+    age_bands:
+      +column_types:
+        min_age: int
+        max_age: int
+        is_minor: boolean
+        sort_order: int

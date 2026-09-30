@@ -1,0 +1,18 @@
+country_code,alpha3,country_name,region
+US,USA,United States,NA
+CA,CAN,Canada,NA
+MX,MEX,Mexico,LATAM
+BR,BRA,Brazil,LATAM
+AR,ARG,Argentina,LATAM
+GB,GBR,United Kingdom,EMEA
+DE,DEU,Germany,EMEA
+FR,FRA,France,EMEA
+ES,ESP,Spain,EMEA
+PL,POL,Poland,EMEA
+TR,TUR,Turkey,EMEA
+JP,JPN,Japan,APAC
+KR,KOR,South Korea,APAC
+AU,AUS,Australia,APAC
+IN,IND,India,APAC
+PH,PHL,Philippines,APAC
+XX,XXX,Unknown,Unknown

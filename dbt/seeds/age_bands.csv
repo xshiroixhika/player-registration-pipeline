@@ -1,0 +1,9 @@
+age_band_label,min_age,max_age,is_minor,sort_order
+Under 13,0,12,true,1
+13-17,13,17,true,2
+18-24,18,24,false,3
+25-34,25,34,false,4
+35-44,35,44,false,5
+45-54,45,54,false,6
+55+,55,120,false,7
+Unknown,,,false,99

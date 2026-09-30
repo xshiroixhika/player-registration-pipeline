@@ -1,0 +1,8 @@
+platform_code,platform_name,platform_family
+pc,PC,PC
+ps5,PlayStation 5,Console
+xbox,Xbox Series X|S,Console
+switch,Nintendo Switch,Console
+ios,iOS,Mobile
+android,Android,Mobile
+unknown,Unknown,Unknown

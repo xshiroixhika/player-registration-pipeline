@@ -1,0 +1,50 @@
+version: 2
+models:
+  - name: fct_player_registrations
+    description: "Gold fact. Grain: one row per registered player. PII-free."
+    columns:
+      - name: player_key
+        tests: [unique, not_null]
+      - name: date_key
+        tests:
+          - relationships: {to: ref('dim_date'), field: date_key}
+      - name: platform_key
+        tests:
+          - relationships: {to: ref('dim_platform'), field: platform_key}
+      - name: country_key
+        tests:
+          - relationships: {to: ref('dim_country'), field: country_key}
+      - name: age_band_key
+        tests:
+          - relationships: {to: ref('dim_age_band'), field: age_band_key}
+      - name: channel_key
+        tests:
+          - relationships: {to: ref('dim_acquisition_channel'), field: channel_key}
+
+  - name: agg_daily_registrations
+    description: "Dashboard table. Counts under min_cell_size are null with is_suppressed = true."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            [registration_date, country_name, platform_name, age_band_label, channel]
+
+  - name: dim_date
+    columns:
+      - name: date_key
+        tests: [unique, not_null]
+  - name: dim_country
+    columns:
+      - name: country_key
+        tests: [unique, not_null]
+  - name: dim_platform
+    columns:
+      - name: platform_key
+        tests: [unique, not_null]
+  - name: dim_age_band
+    columns:
+      - name: age_band_key
+        tests: [unique, not_null]
+  - name: dim_acquisition_channel
+    columns:
+      - name: channel_key
+        tests: [unique, not_null]

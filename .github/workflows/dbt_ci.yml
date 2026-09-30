@@ -1,0 +1,38 @@
+# Runs on every pull request: nothing reaches production untested.
+name: dbt CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  dbt-build:
+    runs-on: ubuntu-latest
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_HTTP_PATH: ${{ secrets.DATABRICKS_CI_HTTP_PATH }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_CI_TOKEN }}
+      PLAYER_HASH_SALT: ${{ secrets.PLAYER_HASH_SALT }}
+      DBT_PROFILES_DIR: ${{ github.workspace }}/dbt
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -r requirements.txt
+      - run: pip install ruff && ruff check extract airflow databricks
+      - name: dbt build in an isolated CI schema
+        working-directory: dbt
+        run: |
+          cp profiles.yml.example profiles.yml
+          dbt deps
+          dbt build --target ci
+      # Upgrade path: slim CI. Download the prod manifest and run
+      #   dbt build --select state:modified+ --defer --state prod-manifest/
+      # to test only changed models and everything downstream of them.
+
+  deploy:
+    # Merging to main deploys; Airflow's repo sync picks up the new code.
+    if: false  # placeholder: wire to your deploy mechanism
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "deploy"

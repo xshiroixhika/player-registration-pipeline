@@ -1,0 +1,20 @@
+version: 2
+seeds:
+  - name: country_codes
+    description: ISO 3166-1 countries with reporting regions. Row XX represents Unknown.
+    columns:
+      - name: country_code
+        tests: [unique, not_null]
+  - name: platforms
+    columns:
+      - name: platform_code
+        tests: [unique, not_null]
+  - name: age_bands
+    description: Business-owned age bands. Edit here to change bands everywhere.
+    columns:
+      - name: age_band_label
+        tests: [unique, not_null]
+  - name: campaigns
+    columns:
+      - name: campaign_id
+        tests: [unique, not_null]

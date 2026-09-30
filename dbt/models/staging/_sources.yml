@@ -1,0 +1,14 @@
+version: 2
+sources:
+  - name: bronze
+    database: registrations
+    schema: bronze
+    loaded_at_field: _ingested_at
+    freshness:                       # checked by `dbt source freshness` before each build
+      warn_after: {count: 26, period: hour}
+      error_after: {count: 48, period: hour}
+    tables:
+      - name: raw_player_registrations
+        description: Raw extracts from the accounts DB replica. Append-only; duplicates expected.
+      - name: source_daily_counts
+        description: The source DB's own daily counts, used for reconciliation.

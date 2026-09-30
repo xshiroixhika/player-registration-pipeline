@@ -1,0 +1,30 @@
+version: 2
+models:
+  - name: stg_player_registrations
+    description: >
+      Silver. One row per real (non-internal) registered player. Deduplicated,
+      typed, standardized. Restricted to the data team (contains birth_year).
+    columns:
+      - name: player_id
+        tests: [unique, not_null]
+      - name: registered_at
+        tests: [not_null]
+      - name: registration_date
+        tests: [not_null]
+      - name: platform_code
+        tests:
+          - relationships:
+              to: ref('platforms')
+              field: platform_code
+      - name: country_code
+        tests:
+          - not_null
+          - relationships:
+              to: ref('country_codes')
+              field: country_code
+      - name: country_source
+        tests:
+          - accepted_values:
+              values: ['billing', 'ip_geo', 'unknown']
+  - name: quarantine_player_registrations
+    description: Bronze rows that failed validation in the last 30 days.

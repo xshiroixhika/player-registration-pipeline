@@ -1,0 +1,8 @@
+dbt-databricks>=1.8,<2.0
+pandas>=2.0
+pyarrow>=14.0
+sqlalchemy>=2.0
+psycopg2-binary>=2.9
+boto3>=1.34
+apache-airflow-providers-databricks>=6.0
+tableauserverclient>=0.30
